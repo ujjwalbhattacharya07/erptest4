@@ -1,0 +1,105 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Test OfficeJS UI</title>
+  <script src="../../web_site_module/officejs_text_editor/rsvp.js"></script>
+  <script src="../../web_site_module/officejs_text_editor/jiodev.js"></script>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Test OfficeJS UI</td></tr>
+</thead><tbody>
+<tal:block metal:use-macro="here/Zuite_CommonTemplate/macros/init" />
+<!-- Clean Up -->
+<tr>
+  <td>open</td>
+  <td>${base_url}/bar_module/ListBoxZuite_reset</td>
+  <td></td>
+</tr>
+<tr>
+  <td>assertTextPresent</td>
+  <td>Reset Successfully.</td>
+  <td></td>
+</tr>
+<tal:block tal:define="web_site_name python: 'officejs_drive_app'">
+  <tal:block metal:use-macro="here/Zuite_CommonTemplateForOfficejsUi/macros/install_offline_and_redirect" />
+</tal:block>
+<tr>
+  <td>waitForElementPresent</td>
+  <td>//a[@data-i18n="Storages"]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>//a[@data-i18n="Storages"]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForElementPresent</td>
+  <td>link=Local is Enough</td>
+  <td></td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>link=Local is Enough</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForElementPresent</td>
+  <td>link=Add</td>
+  <td></td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>link=Add</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForElementPresent</td>
+  <td>//option[@value='3#Car3']</td>
+  <td></td>
+</tr>
+<tr>
+  <td>select</td>
+  <td>id=car</td>
+  <td>label=Car2</td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>//button[@name='submit']</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForElementPresent</td>
+  <td>//label[@for='comment']</td>
+  <td></td>
+</tr>
+<tr>
+  <td>type</td>
+  <td>id=end</td>
+  <td>3</td>
+</tr>
+<tr>
+  <td>type</td>
+  <td>id=drive_hour</td>
+  <td>1</td>
+</tr>
+<tr>
+  <td>type</td>
+  <td>id=comment</td>
+  <td>OK</td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>//button[@name='submit']</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForElementPresent</td>
+  <td>link=Add</td>
+  <td></td>
+</tr>
+</tbody>
+</table>

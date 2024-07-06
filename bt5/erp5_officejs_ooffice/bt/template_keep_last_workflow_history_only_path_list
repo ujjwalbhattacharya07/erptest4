@@ -1,0 +1,8 @@
+web_page_module/gadget_ooffice_*
+image_module/ooo_logo_*
+web_site_module/ooffice_presentation
+web_site_module/ooffice_presentation/**
+web_site_module/ooffice_spreadsheet
+web_site_module/ooffice_spreadsheet/**
+web_site_module/ooffice_text
+web_site_module/ooffice_text/**

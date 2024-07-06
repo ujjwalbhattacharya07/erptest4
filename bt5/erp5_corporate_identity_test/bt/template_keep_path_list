@@ -1,0 +1,13 @@
+document_module/template_test_*
+image_module/template_test_*
+image_module/template_test_image*
+organisation_module/template_test*
+organisation_module/template_test*/default**
+bank_account_module/template_test_*
+person_module/template_test*
+person_module/template_test*/default**
+web_page_module/template_test_*
+portal_categories/group/template_test_group
+portal_tests/corporate_identity_test_zuite
+portal_tests/corporate_identity_test_zuite/*
+support_request_module/template_test_*

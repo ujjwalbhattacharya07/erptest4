@@ -1,0 +1,5 @@
+web_page_module/store_officejs_*
+document_module/store_officejs_*
+image_module/store_officejs_*
+web_site_module/application-list/store
+web_site_module/application-list/store/**

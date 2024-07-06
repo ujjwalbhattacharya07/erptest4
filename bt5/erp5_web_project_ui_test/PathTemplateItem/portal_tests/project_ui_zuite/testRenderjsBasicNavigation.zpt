@@ -1,0 +1,177 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Test RenderJS UI</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Test RenderJS UI</td></tr>
+</thead><tbody>
+<tal:block metal:use-macro="here/Zuite_CommonTemplate/macros/init" />
+
+<!-- Clean Up -->
+<tr>
+  <td>open</td>
+  <td>${base_url}/bar_module/ListBoxZuite_reset</td>
+  <td></td>
+</tr>
+<tr>
+  <td>assertTextPresent</td>
+  <td>Reset Successfully.</td>
+  <td></td>
+</tr>
+
+<!-- Initialize -->
+<tr>
+  <td>open</td>
+  <td>${base_url}/portal_skins/erp5_web_project_test/ERP5Site_createTestStartedProject</td>
+  <td></td>
+</tr>
+<tr>
+  <td>assertTextPresent</td>
+  <td>Project Created</td>
+  <td></td>
+</tr>
+<tal:block metal:use-macro="here/Zuite_CommonTemplate/macros/wait_for_activities" />
+<tr>
+  <td>open</td>
+  <td>${base_url}/web_site_module/project_management/</td>
+  <td></td>
+</tr>
+<tal:block metal:use-macro="here/Zuite_CommonTemplateForRenderjsUi/macros/wait_for_app_loaded" />
+<!--<tal:block metal:use-macro="here/Zuite_CommonTemplateForRenderjsUi/macros/wait_for_listbox_loaded" />-->
+
+<tr>
+  <td>waitForElementPresent</td>
+  <td>//div[@data-gadget-url='${base_url}/web_site_module/project_management/gadget_erp5_page_project_front_page.html']</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForElementPresent</td>
+  <td>//div[@class='front-project-list']</td>
+  <td></td>
+</tr>
+<!-- Check panel -->
+<tr>
+  <td>waitForElementPresent</td>
+ <td>//div[@data-gadget-url='${base_url}/web_site_module/project_management/gadget_erp5_project_panel.html']//a[text()='Projects' and contains(@href, '#!display_stored_state') and contains(@href, 'n.jio_key=project_module')]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>assertElementPresent</td>
+ <td>//div[@data-gadget-url='${base_url}/web_site_module/project_management/gadget_erp5_project_panel.html']//a[text()='Tasks' and contains(@href, '#!display_stored_state') and contains(@href, 'n.jio_key=task_module')]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>assertElementPresent</td>
+ <td>//div[@data-gadget-url='${base_url}/web_site_module/project_management/gadget_erp5_project_panel.html']//a[text()='Task Reports' and contains(@href, '#!display_stored_state') and contains(@href, 'n.jio_key=task_report_module')]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>assertElementPresent</td>
+ <td>//div[@data-gadget-url='${base_url}/web_site_module/project_management/gadget_erp5_project_panel.html']//a[text()='Documents' and contains(@href, '#!display_stored_state') and contains(@href, 'n.jio_key=document_module')]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>assertElementPresent</td>
+ <td>//div[@data-gadget-url='${base_url}/web_site_module/project_management/gadget_erp5_project_panel.html']//a[text()='Bugs' and contains(@href, '#!display_stored_state') and contains(@href, 'n.jio_key=bug_module')]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>assertElementPresent</td>
+ <td>//div[@data-gadget-url='${base_url}/web_site_module/project_management/gadget_erp5_project_panel.html']//a[text()='Tests' and contains(@href, '#!display_stored_state') and contains(@href, 'n.jio_key=test_result_module')]</td>
+  <td></td>
+</tr>
+<tr>
+  <td>assertElementPresent</td>
+ <td>//div[@data-gadget-url='${base_url}/web_site_module/project_management/gadget_erp5_project_panel.html']//a[text()='Logout' and contains(@href, '#!display') and contains(@href, 'n.page=logout')]</td>
+  <td></td>
+</tr>
+<!-- Check project present -->
+<tr>
+  <td>assertElementPresent</td>
+  <td>//div[@class='front-project-list']//div[@class='project-title']//span[text()='test-project']</td>
+  <td></td>
+</tr>
+<tr>
+  <td>assertElementPresent</td>
+  <td>//div[@class='front-project-list']//div[@class='project-title']//a[text()='(Project Page)']</td>
+  <td></td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>//div[@class='front-project-list']//div[@class='project-title']//a[text()='(Project Page)']</td>
+  <td></td>
+</tr>
+<!-- check project quick view page elements -->
+<tr>
+ <td>waitForElementPresent</td>
+ <td>//a[@id='milestone_link' and @class='first-line-buttons']</td>
+ <td></td>
+</tr>
+<tr>
+ <td>assertElementPresent</td>
+ <td>//a[text()='Milestones' and contains(@href, '#!push_history') and contains(@href, 'n.jio_key=milestone_module')]</td>
+ <td></td>
+</tr>
+<tr>
+ <td>assertElementPresent</td>
+ <td>//a[text()='Support Requests']</td>
+ <td></td>
+</tr>
+<tr>
+ <td>assertElementPresent</td>
+ <td>//a[text()='Documents']</td>
+ <td></td>
+</tr>
+<tr>
+ <td>assertElementPresent</td>
+ <td>//a[text()='Activities']</td>
+ <td></td>
+</tr>
+<tr>
+ <td>assertElementPresent</td>
+ <td>//a[text()='Opened Bugs']</td>
+ <td></td>
+</tr>
+<tr>
+ <td>assertElementPresent</td>
+ <td>//a[text()='Ongoing Tasks']</td>
+ <td></td>
+</tr>
+<tr>
+ <td>assertElementPresent</td>
+ <td>//a[text()='Opened Task Reports']</td>
+ <td></td>
+</tr>
+<tr>
+ <td>assertElementPresent</td>
+ <td>//a[text()='Latest Test Result']</td>
+ <td></td>
+</tr>
+<tr>
+ <td>assertElementPresent</td>
+ <td>//a[text()='Test Suite']</td>
+ <td></td>
+</tr>
+<!-- wait a bit for the editor -->
+<tr>
+  <td>pause</td>
+  <td>2000</td>
+  <td></td>
+</tr>
+<tr>
+ <td>assertElementPresent</td>
+ <td>//a[text()='Edit Project Page' and @class='first-line-buttons ui-disabled']</td>
+ <td></td>
+</tr>
+<tr>
+  <td>assertElementNotPresent</td>
+  <td>//button[text()="Maximize"]</td>
+  <td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

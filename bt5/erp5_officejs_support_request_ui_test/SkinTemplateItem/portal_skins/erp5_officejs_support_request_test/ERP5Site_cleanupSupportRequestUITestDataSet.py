@@ -1,0 +1,39 @@
+"""Cleanup the data from support request module.
+
+So that test are isolated.
+"""
+from Products.ZSQLCatalog.SQLCatalog import Query, NegatedQuery
+portal = context.getPortalObject()
+test_project_set = set((
+    portal.project_module.erp5_officejs_support_request_ui_test_project_001,
+    portal.project_module.erp5_officejs_support_request_ui_test_project_002))
+erp5_officejs_support_request_test_second_project = portal.project_module.get('erp5_officejs_support_request_test_second_project')
+if erp5_officejs_support_request_test_second_project is not None:
+  test_project_set.add(erp5_officejs_support_request_test_second_project)
+
+to_delete_list = []
+for brain in portal.portal_catalog(
+    portal_type="Support Request",
+    simulation_state=NegatedQuery(Query(simulation_state=("cancelled",)))):
+  support_request = brain.getObject()
+  if support_request.getId().startswith('erp5_officejs_support_request_ui_test_'):
+    continue # business template data
+  assert support_request.getSourceProjectValue() in test_project_set, \
+     "Support request %s have unexpected project." % support_request.absolute_url()
+  to_delete_list.append(support_request.getId())
+portal.support_request_module.manage_delObjects(to_delete_list)
+
+
+if erp5_officejs_support_request_test_second_project is not None:
+  portal.project_module.manage_delObjects(ids=[erp5_officejs_support_request_test_second_project.getId()])
+
+event_to_delete_id_list = []
+for event in portal.event_module.contentValues():
+  if event.getFollowUp(portal_type='Support Request'):
+    event_to_delete_id_list.append(event.getId())
+portal.event_module.manage_delObjects(event_to_delete_id_list)
+
+# Clear worklist cache
+portal.portal_caches.clearAllCache()
+
+return "Done."

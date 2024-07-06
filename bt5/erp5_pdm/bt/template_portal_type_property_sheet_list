@@ -1,0 +1,9 @@
+Component Individual Variation | DefaultImage
+Component | DefaultImage
+Measure Cell | Amount
+Product Individual Variation | DefaultImage
+Product Individual Variation | Reference
+Product | DefaultImage
+Resource Measures Consistency Constraint | ConstraintType
+Service Individual Variation | DefaultImage
+Supply Cell | Reference

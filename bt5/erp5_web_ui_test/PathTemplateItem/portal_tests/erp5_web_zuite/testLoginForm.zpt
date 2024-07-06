@@ -1,0 +1,56 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Test Login Form</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Test Login Form</td></tr>
+</thead><tbody>
+<tal:block metal:use-macro="here/Zuite_erp5_web_common/macros/init" />
+<tr>
+  <td>open</td>
+  <td>${base_url}/web_site_module/WebSiteModule_createTestSite?id=test_web_site&amp;title=Test Web Site</td>
+  <td></td>
+  <td>Create a new site</td>
+</tr>
+<tr>
+  <td>assertTextPresent</td>
+  <td>Created Successfully.</td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>open</td>
+  <td>${base_url}/web_site_module/Zuite_waitForActivities</td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>assertTextPresent</td>
+  <td>Done.</td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>openAndWait</td>
+  <td>${base_url}/logout</td>
+  <td></td>
+</tr>
+<tal:block tal:define="login_form_url python:'${base_url}/web_site_module/test_web_site'">
+  <tal:block metal:use-macro="python: context.Zuite_CommonTemplate.macros['login']">
+    <tal:block metal:fill-slot="username">test_webmaster</tal:block>
+    <tal:block metal:fill-slot="password">test_webmaster</tal:block>
+  </tal:block>
+</tal:block>
+<tr>
+  <td>verifyText</td>
+  <td>//span[@class='headline']</td>
+  <td>Test Web Site</td>
+  <td>Make sure login within ERP5 Web</td>
+</tr>
+</tbody></table>
+</body>
+</html>

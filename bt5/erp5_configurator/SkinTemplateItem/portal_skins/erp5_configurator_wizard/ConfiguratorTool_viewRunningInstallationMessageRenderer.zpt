@@ -1,0 +1,5 @@
+<div>
+  <img src="loading.gif"/>
+</div>
+
+<tal:block tal:replace="structure python: here.ConfiguratorTool_viewPatienceMessageRenderer()"/>

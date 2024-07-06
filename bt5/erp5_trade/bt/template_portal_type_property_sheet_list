@@ -1,0 +1,15 @@
+Business Process | Reference
+Business Process | Version
+Delivery Node | DeliveryNode
+Duplicate Inventory Constraint | ConstraintType
+Internal Packing List | DeliveryCausalityStateConstraint
+Inventory Report | Arrow
+Inventory Report | InventoryReport
+Purchase Packing List | DeliveryCausalityStateConstraint
+Returned Purchase Packing List | DeliveryCausalityStateConstraint
+Returned Sale Packing List | DeliveryCausalityStateConstraint
+Sale Order | PaymentCondition
+Sale Packing List | DeliveryCausalityStateConstraint
+Sale Trade Condition | PaymentCondition
+Trade Model Line Cell Consistency Constraint | ConstraintType
+Trade Model Path | PaymentCondition

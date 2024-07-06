@@ -1,0 +1,240 @@
+<dtml-var manage_page_header>
+<style>
+textarea.form-control {
+  resize: both;
+}
+textarea.form-control, input[type=text].form-control {
+  font-family: monospace;
+}
+</style>
+<dtml-let help_product="'Formulator'" help_topic=meta_type>
+<dtml-var manage_tabs>
+</dtml-let>
+
+<main class="container-fluid">
+<p class="form-help lead">
+Surcharge <dtml-var meta_type> properties here.
+</p>
+
+<form action="manage_edit" method="POST">
+<table class="table table-striped table-hover table-sm">
+<dtml-let proxy_field="this()"
+          current_field="None if proxy_field.getTemplateField() is None else proxy_field.getRecursiveTemplateField()">
+
+  <!-- First, display ProxyField properties -->
+  <!-- see: Formulator/dtml/fieldEdit.dtml -->
+  <dtml-in "form.get_groups()">
+  <dtml-let group=sequence-item fields="form.get_fields_in_group(group)">
+
+  <dtml-if fields>
+  <tr>
+  <td colspan="4" class="font-weight-bold">
+    Proxy Widget properties <dtml-if "current_field is not None">(<dtml-var expr="current_field.meta_type">)</dtml-if>
+  </td>
+  </tr>
+  <dtml-var fieldListHeader>
+  <dtml-let current_field="this()">
+  <dtml-in fields>
+  <dtml-let field=sequence-item field_id="field.id"
+            value="current_field.get_orig_value(field_id)"
+            override="current_field.get_override(field_id)"
+            tales="current_field.get_tales(field_id)">
+    <tr>
+      <td>
+      <dtml-if "tales or override">[</dtml-if><dtml-var "field.title()"><dtml-if "field.has_value('required') and field.get_value('required')">*</dtml-if><dtml-if "tales or override">]</dtml-if>
+      </td>
+      <td>
+        <dtml-var "field.render(value)">
+      </td>
+      <td>
+        <dtml-var "field.meta_type">
+      </td>
+      <td>
+        <p class="form-text">
+          <small><dtml-var "field.get_value('description')"></small>
+        </p>
+      </td>
+    </tr>
+  </dtml-let>
+  </dtml-in>
+  </dtml-let>
+  </dtml-if>
+  </dtml-let>
+  </dtml-in>
+
+    <tr>
+      <td>
+        <div>Proxy Target</div>
+      </td>
+      <td>
+        <a href="manage_edit_target" class="btn btn-info">Click to edit the target</a>
+      </td>
+      <td></td><td></td>
+    </tr>
+
+</table>
+<table class="table table-striped table-hover table-sm">
+<!-- Then, display Template Field properties -->
+
+  <dtml-if "current_field is not None">
+    <dtml-let form="current_field.form">
+
+  <dtml-in "form.get_groups()">
+    <dtml-let group=sequence-item fields="form.get_fields_in_group(group)">
+      <dtml-if fields>
+        <tr>
+          <td colspan="5" class="font-weight-bold">
+            <dtml-var group capitalize> properties
+          </td>
+        </tr>
+
+        <dtml-var proxyFieldListHeader>
+
+        <dtml-in fields>
+        <dtml-let field=sequence-item field_id="field.id"
+                  is_datetime_field="field.meta_type == 'DateTimeField'"
+                  value="proxy_field.get_recursive_orig_value(field_id)"
+                  override="proxy_field.get_recursive_override(field_id)"
+                  tales="proxy_field.get_recursive_tales(field_id)">
+          <tr>
+            <td>
+              <dtml-let checkbox_key="'surcharge_%s' % field_id" >
+                <dtml-if "proxy_field.is_delegated(field_id)">
+                  <input type="checkbox" 
+                         name="<dtml-var checkbox_key>" 
+                         onclick="toggleFieldState(event)"
+                         checked="checked" />
+                <dtml-else >
+                  <input type="checkbox" 
+                         onclick="toggleFieldState(event)"
+                         name="<dtml-var checkbox_key>" />
+                </dtml-if >
+              </dtml-let >
+            </td>
+            <td>
+              <dtml-if "tales or override">[
+                </dtml-if>
+                <dtml-var "field.title()">
+                <dtml-if "field.has_value('required') and field.get_value('required')">*
+                </dtml-if>
+                <dtml-if "tales or override">]
+              </dtml-if>
+            </td>
+            <dtml-if "proxy_field.is_delegated(field_id)">
+              <td class="to_disable delegated <dtml-if is_datetime_field>form-inline</dtml-if>">
+              <dtml-var "field.render(value)">
+              </td>
+            <dtml-else >
+              <td class="to_disable <dtml-if is_datetime_field>form-inline</dtml-if>">
+              <dtml-var "field.render(value)">
+              </td>
+            </dtml-if>
+            <td>
+              <dtml-var "field.meta_type">
+            </td>
+            <td>
+              <p class="form-text">
+                <small><dtml-var "field.get_value('description')"></small>
+              </p>
+            </td>
+          </tr>
+        </dtml-let>
+        </dtml-in>
+      </dtml-if>
+    </dtml-let>
+  </dtml-in>
+
+  </dtml-let>
+  </dtml-if>
+  </dtml-let>
+</table>
+
+<div class="zmi-controls">
+  <input class="btn btn-primary" type="submit" name="submit" value="Save Changes" />
+</div>
+
+
+</form>
+</main>
+<script type="text/javascript">
+function isClass(object, className) {
+        if (object.className != undefined){
+        return (object.className.search('(^|\\s)' + className + '(\\s|$)') != -1);
+        }
+        return false;
+}
+function GetElementsWithClassName(elementName,className) {
+        var allElements = document.getElementsByTagName(elementName);
+        var elemColl = new Array();
+        for (i = 0; i< allElements.length; i++) {
+                if (isClass(allElements[i], className)) {
+                        elemColl[elemColl.length] = allElements[i];
+                }
+        }
+        return elemColl;
+}
+function normalEvent() { return true; }
+function ignoreEvent() { return false; }
+
+var last_selected;
+function registerSelection() {
+  last_selected = this.selectedIndex;
+}
+function dontChangeSelection() {
+  this.selectedIndex = last_selected;
+}
+
+var class_deletaged_list = GetElementsWithClassName('td','delegated');
+for(var i=0; i<class_deletaged_list.length; i++) {
+  var disable_children = class_deletaged_list[i].childNodes;
+  for (var j=0; j<disable_children.length; j++) {
+    var element = disable_children[j];
+    if (element.type == 'hidden'){
+      continue;
+    }
+    element.readOnly = true;
+    if (element.type == 'checkbox'){
+      element.onclick = ignoreEvent;
+    } else if (element.tagName == 'SELECT') {
+      element.onfocus = registerSelection;
+      element.onchange = dontChangeSelection;
+    }
+  }
+}
+
+function toggleFieldState(evt) {
+  evt=(evt)?evt:event;
+  var target=(evt.target)?evt.target:evt.srcElement;
+  tr_parent = target.parentNode.parentNode;
+  allElements = tr_parent.childNodes;
+  for (i=0; i<allElements.length; i++) {
+    if (isClass(allElements[i], 'to_disable')) {
+      var disable_children = allElements[i].childNodes;
+      for (var j=0; j<disable_children.length; j++) {
+        var field = disable_children[j];
+        if (field.type == 'hidden'){
+          continue;
+        }
+        if (field.readOnly){
+          field.readOnly = false;
+          if (field.type == 'checkbox'){
+            field.onclick = normalEvent;
+          } else if (field.tagName == 'SELECT') {
+            field.onchange = normalEvent;
+          }
+        }
+        else{
+          field.readOnly = true;
+          if (field.type == 'checkbox'){
+            field.onclick = ignoreEvent;
+          } else if (field.tagName == 'SELECT') {
+            field.onfocus = registerSelection;
+            field.onchange = dontChangeSelection;
+          }
+        }
+      }
+    }
+  }
+}
+</script>
+<dtml-var manage_page_footer>

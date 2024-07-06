@@ -1,0 +1,54 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Test Print Actions</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Test Print Action following <a href="https://www.erp5.com/documentation/developer/howto/erp5-developer-howto/erp5-Guideline.Never.Print.Directly">Guideline</a></td></tr>
+</thead><tbody>
+<tal:block metal:use-macro="here/PTZuite_CommonTemplate/macros/init" />
+<tr><td>store</td>
+    <td>${base_url}/web_site_module/renderjs_runner</td>
+    <td>renderjs_url</td></tr>
+<tr><td>open</td>
+    <td>${renderjs_url}/#/foo_module/1</td><td></td></tr>
+<tal:block metal:use-macro="here/Zuite_CommonTemplateForRenderjsUi/macros/wait_for_app_loaded" />
+
+<tr><td colspan="3"><b>Go to relation field view</b></td></tr>
+<tal:block tal:define="click_configuration python: {'text': 'Views'}">
+  <tal:block metal:use-macro="here/Zuite_CommonTemplateForRenderjsUi/macros/click_on_header_link" />
+</tal:block>
+<tal:block metal:use-macro="here/Zuite_CommonTemplateForRenderjsUi/macros/wait_for_content_loaded" />
+
+<tal:block tal:define="click_configuration python: {'text': 'Relation Fields'}">
+  <tal:block metal:use-macro="here/Zuite_CommonTemplateForRenderjsUi/macros/click_on_page_link" />
+</tal:block>
+<tal:block metal:use-macro="here/Zuite_CommonTemplateForRenderjsUi/macros/wait_for_content_loaded" />
+
+<tal:block tal:define="click_configuration python: {'text': 'Export'}">
+  <tal:block metal:use-macro="here/Zuite_CommonTemplateForRenderjsUi/macros/click_on_header_link" />
+</tal:block>
+<tal:block metal:use-macro="here/Zuite_CommonTemplateForRenderjsUi/macros/wait_for_content_loaded" />
+
+<tr><td>assertElementPresent</td>
+    <td>//h3[text()='Print']</td><td></td></tr>
+<tal:block tal:define="click_configuration python: {'text': 'View Print Dialog'}">
+  <tal:block metal:use-macro="here/Zuite_CommonTemplateForRenderjsUi/macros/click_on_page_link" />
+</tal:block>
+<tal:block metal:use-macro="here/Zuite_CommonTemplateForRenderjsUi/macros/wait_for_content_loaded" />
+
+<tal:block metal:use-macro="here/Zuite_CommonTemplateForRenderjsUi/macros/submit_dialog" />
+<tal:block tal:define="notification_configuration python: {'class': 'success',
+                                                           'text': 'Data received.'}">
+  <tal:block metal:use-macro="here/Zuite_CommonTemplateForRenderjsUi/macros/wait_for_notification" />
+</tal:block>
+
+<tr><td>waitForText</td>
+    <td>//div[@data-gadget-scope='field_last_form_id']//div[@data-gadget-scope='field']</td>
+    <td>Foo_viewRelationField</td></tr>
+</tbody></table>
+</body>
+</html>

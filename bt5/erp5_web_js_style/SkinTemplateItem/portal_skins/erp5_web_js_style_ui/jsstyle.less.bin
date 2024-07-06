@@ -1,0 +1,83 @@
+.flattenNav() {
+  background-color: #DDD;
+
+  // Put the title and the first list on the same line
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  // Increase header size
+  min-height: 2.5em;
+  align-items: center;
+
+  > a {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+
+  ul {
+    margin: 0;
+  }
+  ul, li, a {
+    padding: 0;
+    display: flex;
+    flex: 1;
+    &:not(:first-child) {
+      padding: 0 1em;
+    }
+  }
+}
+
+body {
+  display: grid;
+  grid-gap: 1em;
+  grid-template-areas:
+   "header"
+   "content"
+   "sidebar"
+   "footer";
+
+  @media only screen and (min-width: 50em) {
+    grid-template-areas:
+      "header  header  header"
+      "content content sidebar"
+      "footer  footer  footer";
+  }
+
+  > nav#sitemap {
+    grid-area: header;
+
+    .flattenNav();
+  }
+
+  main {
+    grid-area: content;
+
+    fieldset {
+      border: none;
+      > div {
+        display: flex;
+        flex-flow: row nowrap;
+        > label {
+          margin-right: 1em;
+          font-weight: bold;
+          min-width: 10%;
+        }
+      }
+    }
+    img, video {
+      max-width: 100%;
+    }
+  }
+
+  > aside#document_list {
+    grid-area: sidebar;
+    background-color: #DDD;
+  }
+
+  > nav#language {
+    grid-area: footer;
+
+    .flattenNav();
+  }
+}

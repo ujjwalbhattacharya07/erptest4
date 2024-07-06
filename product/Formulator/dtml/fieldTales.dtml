@@ -1,0 +1,64 @@
+<dtml-var manage_page_header>
+<dtml-var manage_tabs>
+
+<main class="container-fluid">
+<p class="form-help lead">
+Edit <dtml-var meta_type> method TALES expressions here.
+<dtml-if "not isTALESAvailable()"><br>
+<span style="color: #FF0000;">
+Zope Page Templates and therefore TALES is not installed.
+This tab can therefore not be used.
+</span>
+</dtml-if>
+</p>
+
+<form action="manage_tales" method="POST">
+<table class="table table-striped table-hover table-sm">
+
+<dtml-in "override_form.get_groups()">
+<dtml-let group=sequence-item fields="tales_form.get_fields_in_group(group)">
+
+<dtml-if fields>
+<tr>
+<td colspan="3" class="font-weight-bold">
+  <dtml-var group capitalize> properties
+</td>
+</tr>
+
+<dtml-var fieldListHeader>
+
+
+<dtml-let current_field="this()">
+<dtml-in fields>
+<dtml-let field=sequence-item field_id="field.id"
+          value="current_field.get_tales(field.id)">
+
+<tr>
+  <td>
+    <dtml-var "field.title()">
+  </td>
+  <td>
+    <dtml-var "field.render(value)">
+  </td>
+  <td>
+    <dtml-var "current_field.form.get_field(field.id).meta_type">
+  </td>
+</tr>
+
+</dtml-let>
+</dtml-in>
+</dtml-let>
+</dtml-if>
+</dtml-let>
+</dtml-in>
+</div>
+
+</table>
+
+<div class="zmi-controls">
+  <input class="btn btn-primary" type="submit" name="submit" value="Save Changes" />
+</div>
+
+</form>
+</main>
+<dtml-var manage_page_footer>

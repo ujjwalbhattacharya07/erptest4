@@ -1,0 +1,18 @@
+<thead class="thead-light">
+<tr>
+  <th>
+  Name
+  </th>
+  <th class="w-50">
+  Value
+  </th>
+  <th>
+  Field
+  </th>
+  <dtml-if "_['URL'].endswith(('/manage_main', '/manage_edit'))">
+  <th>
+  Description
+  </th>
+  </dtml-if>
+</tr>
+</thead>

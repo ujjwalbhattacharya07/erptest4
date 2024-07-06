@@ -1,0 +1,9 @@
+Accounting Transaction Module | merge_delivery_list
+Invoice Line | price
+Invoice Line | quantity
+Invoice Line | view
+Invoice Line | view_trade_model
+Invoice Root Simulation Rule | view
+Invoice Simulation Rule | view
+Invoice Transaction Simulation Rule | view
+Trade Model Simulation Rule | view
